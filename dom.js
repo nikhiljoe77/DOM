@@ -17,3 +17,14 @@ var listItems = document.getElementsByClassName('list-group-item');
 for (var i = 0; i < listItems.length; i++) {
   listItems[i].style.fontWeight = 'bold';
 }
+var newLi = document.createElement('li');
+newLi.innerText = 'Item 5';
+newLi.classList.add('custom-class');
+var list = document.getElementById('items');
+list.appendChild(newLi);
+var elementsByClassName = document.getElementsByClassName('custom-class');
+var newLiByClassName = elementsByClassName[0];
+newLiByClassName.style.backgroundColor ='green';
+var elementsByTagName = document.getElementsByTagName('li');
+var newLiByTagName = elementsByTagName[elementsByTagName.length - 1];
+newLiByTagName.style.fontWeight ='bold';
