@@ -28,3 +28,7 @@ newLiByClassName.style.backgroundColor ='green';
 var elementsByTagName = document.getElementsByTagName('li');
 var newLiByTagName = elementsByTagName[elementsByTagName.length - 1];
 newLiByTagName.style.fontWeight ='bold';
+var secondItem = document.querySelector('#items li:nth-child(2)');
+secondItem.style.backgroundColor = 'green';
+var thirdItem = document.querySelector('#items li:nth-child(3)');
+thirdItem.style.display = 'none'
