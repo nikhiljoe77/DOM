@@ -5,7 +5,8 @@ var filter = document.getElementById('filter');
 // Form submit event
 form.addEventListener('submit', addItem);
 // Delete event
-itemList.addEventListener('click', removeItem);
+itemList.addEventListener('click',removeItem);
+
 // Filter event
 filter.addEventListener('keyup', filterItems);
 
@@ -15,13 +16,18 @@ function addItem(e){
 
   // Get input value
   var newItem = document.getElementById('item').value;
+  var newItem1 = document.getElementById('item1').value;
 
   // Create new li element
   var li = document.createElement('li');
   // Add class
   li.className = 'list-group-item';
-  // Add text node with input value
-  li.appendChild(document.createTextNode(newItem));
+   // Create span element for item name and description
+   var span = document.createElement('span');
+   span.appendChild(document.createTextNode(newItem + ' - ' + newItem1));
+ 
+   // Append span to li
+   li.appendChild(span);
 
   // Create del button element
   var deleteBtn = document.createElement('button');
@@ -38,24 +44,39 @@ function addItem(e){
   // Append li to list
   itemList.appendChild(li);
   // Create edit button element
-var editBtn = document.createElement('button');
+//var editBtn = document.createElement('button');
 // Add classes to edit button
-editBtn.className = 'btn btn-primary btn-sm float-right edit';
+//editBtn.className = 'btn btn-primary btn-sm float-right edit';
 // Append text node
-editBtn.appendChild(document.createTextNode('Edit'));
+//editBtn.appendChild(document.createTextNode('Edit'));
 // Append button to li
-li.appendChild(editBtn);
-  console.log(1)
+//li.appendChild(editBtn);
+ // console.log(1)
 }
 
 // Remove item
-function removeItem(e){
-  if(e.target.classList.contains('delete')){
-    if(confirm('Are You Sure?')){
-      var li = e.target.parentElement;
+function removeItem(e) {
+  if (e.target.classList.contains('delete')) {
+      var li = e.target.closest('li');
       itemList.removeChild(li);
-      console.log(2)
-    }
+      console.log(1)
   }
 }
 
+// Filter Items
+function filterItems(e){
+  // convert text to lowercase
+  var text = e.target.value.toLowerCase();
+  // Get lis
+  var items = itemList.getElementsByTagName('li');
+  // Convert to an array
+  Array.from(items).forEach(function(item){
+    var itemText = item.textContent.toLowerCase();
+    
+    if (itemText.includes(text)) {
+      item.style.display = 'block';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
