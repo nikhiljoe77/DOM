@@ -1,3 +1,6 @@
+// JavaScript code
+var userDetailsList = document.getElementById('userDetailsList');
+
 function submitForm(event) {
   event.preventDefault();
 
@@ -16,11 +19,8 @@ function submitForm(event) {
     name: name
   };
 
-  // Convert the userDetails object to a JSON string
-  var userDetailsJSON = JSON.stringify(userDetails);
-
-  // Store the userDetails JSON string in local storage
-  localStorage.setItem('userDetails', userDetailsJSON);
+  // Add the userDetails object to the list
+  addUserDetailsToList(userDetails);
 
   console.log('Submitted Data:');
   console.log('Date:', date);
@@ -28,19 +28,22 @@ function submitForm(event) {
   console.log('Time:', time);
   console.log('Phone:', phone);
   console.log('Name:', name);
+
+  // Reset the form
+  document.getElementById('myForm').reset();
 }
-var userDetailsJSON = localStorage.getItem('userDetails');
 
-// Parse the userDetails JSON string back to an object
-var userDetails = JSON.parse(userDetailsJSON);
+function addUserDetailsToList(userDetails) {
+  // Create list item element
+  var listItem = document.createElement('li');
 
-// Access and use the retrieved user details
-console.log('Retrieved Data:');
-console.log('Date:', userDetails.date);
-console.log('Email:', userDetails.email);
-console.log('Time:', userDetails.time);
-console.log('Phone:', userDetails.phone);
-console.log('Name:', userDetails.name);
+  // Create paragraph element for displaying user details
+  var detailsParagraph = document.createElement('p');
+  detailsParagraph.textContent = 'Name: ' + userDetails.name + ', Email: ' + userDetails.email + ', Phone: ' + userDetails.phone + ', Date: ' + userDetails.date + ', Time: ' + userDetails.time;
 
+  // Append the details paragraph to the list item
+  listItem.appendChild(detailsParagraph);
 
-
+  // Append the list item to the user details list
+  userDetailsList.appendChild(listItem);
+}
