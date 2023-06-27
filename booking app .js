@@ -83,11 +83,19 @@ function addUserDetailsToList(userDetails) {
   deleteButton.addEventListener('click', function() {
     // Handle delete button click event
     deleteUserDetails(userDetails, listItem);
+  })
+  // Create EDIT button element
+  var editButton = document.createElement('button');
+  editButton.textContent = 'Edit';
+  editButton.addEventListener('click', function() {
+    // Handle edit button click event
+    editUserDetails(userDetails, listItem);
   });
 
-  // Append the details paragraph and delete button to the list item
+  // Append the details paragraph,edit and delete button to the list item
   listItem.appendChild(detailsParagraph);
   listItem.appendChild(deleteButton);
+  listItem.appendChild(editButton);
 
   // Append the list item to the user details list
   userDetailsList.appendChild(listItem);
@@ -126,4 +134,62 @@ function deleteUserDetails(userDetails, listItem) {
       listItem.parentNode.removeChild(listItem);
     }
   }
+}
+
+function editUserDetails(userDetails) {
+  // Populate the form fields with the user details
+  document.getElementById('name').value = userDetails.name;
+  document.getElementById('email').value = userDetails.email;
+  document.getElementById('phone').value = userDetails.phone;
+  document.getElementById('date').value = userDetails.date;
+  document.getElementById('time').value = userDetails.time;
+
+  // Update the submit button to act as a "Save" button
+  var submitButton = document.getElementById('submitButton');
+  submitButton.textContent = 'Save';
+  submitButton.removeEventListener('click', submitForm);
+  submitButton.addEventListener('click', saveUserDetails.bind(null, userDetails));
+}
+function saveUserDetails(userDetails) {
+  var updatedUserDetails = {
+    date: document.getElementById('date').value,
+    email: document.getElementById('email').value,
+    time: document.getElementById('time').value,
+    phone: document.getElementById('phone').value,
+    name: document.getElementById('name').value
+  };
+
+  // Update the stored user details
+  var storedUserDetailsJSON = localStorage.getItem('userDetails');
+  if (storedUserDetailsJSON) {
+    var storedUserDetails = JSON.parse(storedUserDetailsJSON);
+
+    var index = storedUserDetails.findIndex(function(item) {
+      return (
+        item.name === userDetails.name &&
+        item.email === userDetails.email &&
+        item.phone === userDetails.phone &&
+        item.date === userDetails.date &&
+        item.time === userDetails.time
+      );
+    });
+
+    if (index !== -1) {
+      // Update the stored user details with the updated details
+      storedUserDetails[index] = updatedUserDetails;
+
+      // Update the local storage with the updated JSON string
+      localStorage.setItem('userDetails', JSON.stringify(storedUserDetails));
+
+      // Reset the form and reload the list of user details
+      document.getElementById('myForm').reset();
+      loadUserDetails();
+    }
+  }
+
+  // Update the submit button to act as a "Submit" button
+  var submitButton = document.getElementById('submitButton');
+  submitButton.textContent = 'Submit';
+  submitButton.removeEventListener('click', saveUserDetails);
+  submitButton.addEventListener('click', submitForm);
 }
