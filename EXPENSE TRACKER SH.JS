@@ -1,4 +1,5 @@
 // Retrieve stored expenses from localStorage or initialize an empty array
+//activity
 renderExpenseList()
 const expenses = JSON.parse(localStorage.getItem('expenses')) || [];
 var submitButton = document.getElementById('submitButton')
