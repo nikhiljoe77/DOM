@@ -57,3 +57,4 @@ Promise.all([create1stBlog(), create2ndBlog()])
     blogs.forEach((blog) => console.log(blog.title));
   })
   .catch((error) => console.log(error));
+ 
