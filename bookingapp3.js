@@ -1,6 +1,6 @@
 let userDetailsList = document.getElementById('userDetailsList');
 window.addEventListener("DOMContentLoaded",()=>{
-axios.get('https://crudcrud.com/api/9d1486e2a9be4fc8ae079f91cd17fb06/APPOINTMENTDATA')
+axios.get('https://crudcrud.com/api/ad8b38d326c445399c1e29cb5cbcd7d5/APPOINTMENTDATA')
 .then((response) => {
   console.log(response)
   for(var i=0;i<response.data.length;i++)
@@ -35,7 +35,7 @@ function submitForm(event) {
     phone: phone,
     name: name
   };
-  axios.post("https://crudcrud.com/api/9d1486e2a9be4fc8ae079f91cd17fb06/APPOINTMENTDATA", userDetails)
+  axios.post("https://crudcrud.com/api/ad8b38d326c445399c1e29cb5cbcd7d5/APPOINTMENTDATA", userDetails)
     .then((response) => {
       addUserDetailsToList(userDetails)
       //console.log(respone)
@@ -96,7 +96,7 @@ function addUserDetailsToList(userDetails) {
   deleteButton.textContent = 'Delete';
   deleteButton.addEventListener('click', function () {
     // Handle delete button click event
-    deleteUserDetails(userDetails, listItem);
+    deleteUserDetails(userDetails,listItem);
   })
   // Create EDIT button element
   let editButton = document.createElement('button');
@@ -115,9 +115,17 @@ function addUserDetailsToList(userDetails) {
   userDetailsList.appendChild(listItem);
 }
 
-function deleteUserDetails(userDetails, listItem) {
+function deleteUserDetails(userDetails,listItem) {
+  axios.delete(`https://crudcrud.com/api/ad8b38d326c445399c1e29cb5cbcd7d5/APPOINTMENTDATA/${userDetails._id}`)
+  .then((response) => {
+    // Remove the list item from the user details list
+    listItem.parentNode.removeChild(listItem);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
-  // Retrieve the stored user details from local storage
+  /*// Retrieve the stored user details from local storage
   let storedUserDetailsJSON = localStorage.getItem('userDetailsJSON');
   if (storedUserDetailsJSON) {
     let storedUserDetails = JSON.parse(storedUserDetailsJSON);
@@ -148,9 +156,9 @@ function deleteUserDetails(userDetails, listItem) {
       // Remove the list item from the user details list
       listItem.parentNode.removeChild(listItem);
     }
-  }
+  }*/
 }
-
+/*
 function editUserDetails(userDetails, listItem) {
   // Populate the form fields with the user details
   document.getElementById('name').value = userDetails.name;
@@ -160,5 +168,5 @@ function editUserDetails(userDetails, listItem) {
   document.getElementById('time').value = userDetails.time;
   deleteUserDetails(userDetails, listItem)
 }
-
+*/
 
