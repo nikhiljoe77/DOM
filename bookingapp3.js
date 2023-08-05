@@ -1,11 +1,23 @@
 let userDetailsList = document.getElementById('userDetailsList');
+window.addEventListener("DOMContentLoaded",()=>{
+axios.get('https://crudcrud.com/api/9d1486e2a9be4fc8ae079f91cd17fb06/APPOINTMENTDATA')
+.then((response) => {
+  console.log(response)
+  for(var i=0;i<response.data.length;i++)
+  addUserDetailsToList(response.data[i])
+  
+})
+.catch((err) => {
+  console.log(err)
+})
 /*let userDetailsJSON = localStorage.getItem('userDetailsJSON');
 let userDetails = userDetailsJSON ? JSON.parse(userDetailsJSON) : [];
 if (userDetails.length!=0)
 {
     for(let i=0;i<userDetails.length;i++)
 addUserDetailsToList(userDetails[i])
-}*/
+}}*/
+})
 function submitForm(event) {
   event.preventDefault();
 
@@ -24,15 +36,15 @@ function submitForm(event) {
     name: name
   };
   axios.post("https://crudcrud.com/api/9d1486e2a9be4fc8ae079f91cd17fb06/APPOINTMENTDATA", userDetails)
-    .then((respone) => {
+    .then((response) => {
       addUserDetailsToList(userDetails)
       //console.log(respone)
     })
     .catch((err) => {
       console.log(err)
     })
-  /* // Store the userDetails JSON string in local storage
-   let storedUserDetailsJSON = localStorage.getItem('userDetailsJSON');
+  // Store the userDetails JSON string in local storage
+   /*let storedUserDetailsJSON = localStorage.getItem('userDetailsJSON');
    let storedUserDetails = storedUserDetailsJSON ? JSON.parse(storedUserDetailsJSON) : [];
  
    if (!Array.isArray(storedUserDetails)) {
