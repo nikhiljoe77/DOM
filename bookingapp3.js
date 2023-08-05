@@ -158,7 +158,7 @@ function deleteUserDetails(userDetails,listItem) {
     }
   }*/
 }
-/*
+
 function editUserDetails(userDetails, listItem) {
   // Populate the form fields with the user details
   document.getElementById('name').value = userDetails.name;
@@ -168,5 +168,5 @@ function editUserDetails(userDetails, listItem) {
   document.getElementById('time').value = userDetails.time;
   deleteUserDetails(userDetails, listItem)
 }
-*/
+
 
