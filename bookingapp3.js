@@ -1,6 +1,6 @@
 let userDetailsList = document.getElementById('userDetailsList');
 window.addEventListener("DOMContentLoaded",()=>{
-axios.get('https://crudcrud.com/api/ad8b38d326c445399c1e29cb5cbcd7d5/APPOINTMENTDATA')
+axios.get('https://crudcrud.com/api/d31f85bdd8f54a1e994d816b9eb3ac93/APPOINTMENTDATA')
 .then((response) => {
   console.log(response)
   for(var i=0;i<response.data.length;i++)
@@ -35,7 +35,7 @@ function submitForm(event) {
     phone: phone,
     name: name
   };
-  axios.post("https://crudcrud.com/api/ad8b38d326c445399c1e29cb5cbcd7d5/APPOINTMENTDATA", userDetails)
+  axios.post("https://crudcrud.com/api/d31f85bdd8f54a1e994d816b9eb3ac93/APPOINTMENTDATA", userDetails)
     .then((response) => {
       addUserDetailsToList(userDetails)
       //console.log(respone)
@@ -90,7 +90,7 @@ function addUserDetailsToList(userDetails) {
     userDetails.date +
     ', Time: ' +
     userDetails.time;
-
+    
   // Create delete button element
   let deleteButton = document.createElement('button');
   deleteButton.textContent = 'Delete';
@@ -104,6 +104,7 @@ function addUserDetailsToList(userDetails) {
   editButton.addEventListener('click', function () {
     // Handle edit button click event
     editUserDetails(userDetails, listItem);
+   
   });
 
   // Append the details paragraph,edit and delete button to the list item
@@ -116,7 +117,7 @@ function addUserDetailsToList(userDetails) {
 }
 
 function deleteUserDetails(userDetails,listItem) {
-  axios.delete(`https://crudcrud.com/api/ad8b38d326c445399c1e29cb5cbcd7d5/APPOINTMENTDATA/${userDetails._id}`)
+  axios.delete(`https://crudcrud.com/api/d31f85bdd8f54a1e994d816b9eb3ac93/APPOINTMENTDATA/${userDetails._id}`)
   .then((response) => {
     // Remove the list item from the user details list
     listItem.parentNode.removeChild(listItem);
@@ -166,7 +167,51 @@ function editUserDetails(userDetails, listItem) {
   document.getElementById('phone').value = userDetails.phone;
   document.getElementById('date').value = userDetails.date;
   document.getElementById('time').value = userDetails.time;
-  deleteUserDetails(userDetails, listItem)
+  axios.delete(`https://crudcrud.com/api/d31f85bdd8f54a1e994d816b9eb3ac93/APPOINTMENTDATA/${userDetails._id}`)
+  .then((response) => {
+    // Remove the list item from the user details list
+    listItem.parentNode.removeChild(listItem);
+  })
+  .catch((err) => {
+    console.log(err);
+  });/*
+    // Populate the form fields with the user details
+    let updatedName = document.getElementById('name').value;
+    let updatedEmail = document.getElementById('email').value;
+    let updatedPhone = document.getElementById('phone').value;
+    let updatedDate = document.getElementById('date').value;
+    let updatedTime = document.getElementById('time').value;
+  
+    let updatedUserDetails = {
+      name: updatedName,
+      email: updatedEmail,
+      phone: updatedPhone,
+      date: updatedDate,
+      time: updatedTime
+    };
+    setTimeout(()=>
+    {
+  axios.put(`https://crudcrud.com/api/d31f85bdd8f54a1e994d816b9eb3ac93/APPOINTMENTDATA/${userDetails._id}`,updatedUserDetails)
+  .then((response) => {
+    // Remove the list item from the user details list
+    let detailsParagraph = listItem.querySelector('p');
+    detailsParagraph.textContent =
+      'Name: ' +
+      updatedName +
+      ', Email: ' +
+      updatedEmail +
+      ', Phone: ' +
+      updatedPhone +
+      ', Date: ' +
+      updatedDate +
+      ', Time: ' +
+      updatedTime;
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+},50000)
+ // deleteUserDetails(userDetails, listItem)*/
 }
 
 
