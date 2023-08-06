@@ -38,6 +38,7 @@ function submitForm(event) {
   axios.post("https://crudcrud.com/api/d31f85bdd8f54a1e994d816b9eb3ac93/APPOINTMENTDATA", userDetails)
     .then((response) => {
       addUserDetailsToList(userDetails)
+      window.location.reload();
       //console.log(respone)
     })
     .catch((err) => {
@@ -70,6 +71,7 @@ function submitForm(event) {
  
    // Reset the form
    //document.getElementById('myForm').reset();*/
+   
 }
 
 
@@ -121,6 +123,7 @@ function deleteUserDetails(userDetails,listItem) {
   .then((response) => {
     // Remove the list item from the user details list
     listItem.parentNode.removeChild(listItem);
+    
   })
   .catch((err) => {
     console.log(err);
