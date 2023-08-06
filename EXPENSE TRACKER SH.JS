@@ -26,7 +26,7 @@ const expense = {
   descriptionInput.value = '';
 }
 
-
+//HELLO
 // Function to save expenses to localStorage
 function saveExpensesToLocalStorage() {
   localStorage.setItem('expenses', JSON.stringify(expenses));
