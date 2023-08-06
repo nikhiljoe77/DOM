@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Form with Bootstrap</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <form id="myForm" onsubmit="submitForm(event)">
+        <style>
+            body {
+                background-color: rgb(0, 255, 0);
+            }
+        </style>
+        <h1 style="color: red; font-weight: bold;text-align: center">TO DO LIST</h1>
+        <label for="toDoName">To Do Name</label>
+        <input type="toDoName" id="toDoName" name="toDoName" required><br><br>
+        <label for="Description">Description</label>
+        <input type="Description" id="Description" name="Description" required><br><br>
+        <input type="submit" value="ADD LIST"><br>
+    </form>
+    <div>
+        <h3>To Dos Remaining</h3>
+        <ul id="toDoListRemaining"></ul>
+    </div>
+    <div>
+        <h3>To Dos Done</h3>
+        <ul id="toDoListDone"></ul>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+    <script>
+        // Function to add an item to the To Do list
+        function submitForm(event) {
+            event.preventDefault();
+            var toDoName = document.getElementById('toDoName').value;
+            var Description = document.getElementById('Description').value;
+            var listD = {
+                toDoName: toDoName,
+                Description: Description
+            }
+            axios.post("https://crudcrud.com/api/d8e21ea9a29a44fd8127f238aa528b61/todolist", listD)
+                .then((response) => {
+                    console.log(response);
+                    displayToDoListDetails(listD);
+                    
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+            document.getElementById('myForm').reset();
+            console.log('Submitted Data:');
+            console.log('toDoName:', toDoName);
+            console.log('Description:', Description);
+        }
+
+        // Function to display the To Do list items
+        function displayToDoListDetails(listD) {
+            var toDoListRemaining = document.getElementById('toDoListRemaining');
+            var toDoListDone = document.getElementById('toDoListDone');
+            toDoListRemaining.innerHTML = '';
+            toDoListDone.innerHTML = '';
+            var toDoItem = document.createElement('li');
+            toDoItem.textContent =`${listD.toDoName}-${listD.Description}` ;
+
+            var tickButton = document.createElement('button');
+            tickButton.textContent = 'Tick';
+            tickButton.addEventListener('click', function () {
+                moveToDone(listD, toDoItem);
+            });
+
+            var crossButton = document.createElement('button');
+            crossButton.textContent = 'Cross';
+            crossButton.addEventListener('click', function () {
+                deleteToDoFromServer(listD, toDoItem);
+                displayToDoListDetails(listD); // Refresh the UI after deleting
+            });
+            toDoItem.appendChild(tickButton);
+            toDoItem.appendChild(crossButton);
+            toDoListRemaining.appendChild(toDoItem)
+        }
+
+        // Function to move a To Do item to the "To Dos done" section
+        function moveToDone(listD, toDoItem) {
+            toDoListDone.appendChild(toDoItem)
+        }
+
+
+
+        // Function to delete a To Do item from the server
+        function deleteToDoFromServer(listD, toDoItem) {
+            axios.delete(`https://crudcrud.com/api/d8e21ea9a29a44fd8127f238aa528b61/todolist/${todoListId}`)
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            axios.get("https://crudcrud.com/api/d8e21ea9a29a44fd8127f238aa528b61/todolist")
+                .then((response) => {
+                    var userDetails = response.data;
+                    displayToDoListDetails(userDetails);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        });
+    </script>
+</body>
+
+</html>
