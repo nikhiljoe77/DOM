@@ -2,9 +2,9 @@ let electronicitems = document.getElementById('electronicitems');
 let fooditems = document.getElementById('fooditems');
 let skincareitems = document.getElementById('skincareitems');
 window.addEventListener("DOMContentLoaded", () => {
-    axios.get('https://crudcrud.com/api/08954b2eeeb541808ac7343b6144b936/SALESPRODUCT')
+    axios.get('https://crudcrud.com/api/3cb56b367b02446b85e55998581ccac4/SALESPRODUCT')
         .then((response) => {
-            console.log(response)
+           
             for (var i = 0; i < response.data.length; i++) {
                 addSalesDetailsToList(response.data[i])
             }
@@ -29,7 +29,8 @@ function submitForm(event) {
         productname: productname,
         category: category,
     };
-    axios.post("https://crudcrud.com/api/08954b2eeeb541808ac7343b6144b936/SALESPRODUCT", salesDetails)
+    console.log(salesDetails.sellingprice)
+    axios.post("https://crudcrud.com/api/3cb56b367b02446b85e55998581ccac4/SALESPRODUCT", salesDetails)
         .then((response) => {
             addSalesDetailsToList(salesDetails)
             window.location.reload();
@@ -70,7 +71,7 @@ function addSalesDetailsToList(salesDetails) {
 }
 
 function deleteUserDetails(userDetails, listItem) {
-    axios.delete(`https://crudcrud.com/api/08954b2eeeb541808ac7343b6144b936/SALESPRODUCT/${userDetails._id}`)
+    axios.delete(`https://crudcrud.com/api/3cb56b367b02446b85e55998581ccac4/SALESPRODUCT/${userDetails._id}`)
         .then((response) => {
             // Remove the list item from the user details list
             listItem.parentNode.removeChild(listItem);
