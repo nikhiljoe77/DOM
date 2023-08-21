@@ -72,3 +72,4 @@ const requesthandler=(req,res)=>{
 }*/
 module.exports.handler=requesthandler
 module.exports.someText='Some hard7 coded text'
+//
