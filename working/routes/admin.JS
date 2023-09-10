@@ -1,16 +1,11 @@
-const path=require("path")
+
 const express=require("express")
 const router=express.Router()
+const productsController=require('../controllers/products')
 
 
+
+router.get('/add-product',productsController.getAddProduct)
+
+router.post('/add-product',productsController.postAddProduct)
 module.exports=router
-router.get('/add-product',(req,res,next)=>{
-    
-    res.sendFile(path.join(__dirname, '..', 'views', 'add-product.html'))
-  
-})
-
-router.post('/add-product',(req,res,next)=>{
-    console.log(req.body)
-res.redirect('/')
-})
