@@ -8,7 +8,7 @@ exports.adding=(req,res,next)=>{
     const phone = req.body.phone;
     const email = req.body.email;
     
-    // console.error(req.body,'i m body')
+    console.error(req.body,'i m body')
     User.create({
         username:username,
         phone:phone,
@@ -57,6 +57,7 @@ exports.updating=(req,res,next)=>{
 }
 
 exports.getting=(req,res,next)=>{
+    console.log("i am getting")
     User.findAll()
     .then(users => {
         res.json(users)

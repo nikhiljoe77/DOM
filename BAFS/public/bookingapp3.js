@@ -1,8 +1,8 @@
-let userDetailsList = document.getElementById('userDetails');
+let userDetailsList = document.getElementById('userDetailsList');
 window.addEventListener("DOMContentLoaded",()=>{
 axios.get("http://localhost:3000/")
 .then((response) => {
-  console.log(response)
+  console.log(" i am the user",response)
   for(var i=0;i<response.data.length;i++)
   addUserDetailsToList(response.data[i])
   
@@ -23,18 +23,17 @@ function submitForm(event) {
 
   
   let email = document.getElementById('email').value;
-
   let phone = document.getElementById('phone').value;
-  let name = document.getElementById('name').value;
+  let username = document.getElementById('username').value;
 
   // Create userDetails object
   let userDetails = {
    
-    email: email,
-    
+    email: email,   
     phone: phone,
-    name: name
+    username: username
   };
+  console.log(userDetails)
   axios.post("http://localhost:3000/", userDetails)
     .then((response) => {
       addUserDetailsToList(userDetails)
@@ -83,7 +82,7 @@ function addUserDetailsToList(userDetails) {
   let detailsParagraph = document.createElement('p');
   detailsParagraph.textContent =
     'Name: ' +
-    userDetails.name +
+    userDetails.username +
     ', Email: ' +
     userDetails.email +
     ', Phone: ' +
@@ -110,13 +109,13 @@ function addUserDetailsToList(userDetails) {
   listItem.appendChild(detailsParagraph);
   listItem.appendChild(deleteButton);
   listItem.appendChild(editButton);
-
+console.log("i am appending", listItem)
   // Append the list item to the user details list
   userDetailsList.appendChild(listItem);
 }
 
 function deleteUserDetails(userDetails,listItem) {
-  axios.delete(`http://localhost:3000/${userDetails._id}`)
+  axios.delete(`http://localhost:3000/${userDetails.id}`)
   .then((response) => {
     // Remove the list item from the user details list
     listItem.parentNode.removeChild(listItem);
@@ -162,11 +161,11 @@ function deleteUserDetails(userDetails,listItem) {
 
 function editUserDetails(userDetails, listItem) {
   // Populate the form fields with the user details
-  document.getElementById('name').value = userDetails.name;
+  document.getElementById('username').value = userDetails.username;
   document.getElementById('email').value = userDetails.email;
   document.getElementById('phone').value = userDetails.phone;
 
-  axios.delete(`http://localhost:3000/${userDetails._id}`)
+  axios.delete(`http://localhost:3000/${userDetails.id}`)
   .then((response) => {
     // Remove the list item from the user details list
     listItem.parentNode.removeChild(listItem);
