@@ -1,0 +1,10 @@
+const express=require('express')
+const path=require('path')
+const expenseroutes=require('./routes/expenseroutes')
+const cors=require('cors')
+const app=express()
+app.use(cors())
+app.use(express.json())
+app.use('/',expenseroutes)
+
+app.listen(4000,()=>{console.log("server is running")})
