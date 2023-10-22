@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Student register</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <label for="date">Select Date:</label>
+    <input type="date" id="date">
+    <button id="search">Search</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    <button id="fetchReport">Fetch Attendance Report</button>
+    <br><br>
+
+    <form id="attendanceForm">
+        <ul>
+            <li>
+                <label for="student1">Kiran:</label>
+                <input type="radio" name="student1" value="present" id="student1_present"> Present
+                <input type="radio" name="student1" value="absent" id="student1_absent"> Absent
+            </li>
+            <li>
+                <label for="student2">Arya:</label>
+                <input type="radio" name="student2" value="present" id="student2_present"> Present
+                <input type="radio" name="student2" value="absent" id="student2_absent"> Absent
+            </li>
+            <!-- Add more students here -->
+        </ul>
+        <button type="submit" id="markAttendance">Mark Attendance</button>
+        <ul id="itemsList" class="list-group">
+        </ul>
+
+
+    </form>
+    <script src="register.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+
+</body>
+
+</html>

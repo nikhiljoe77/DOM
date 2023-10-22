@@ -1,27 +1,10 @@
-const Expenseuser=require('../models/expensemodels')
-exports.add=(req,res,next)=>{
-    console.log("adding")
-   // console.error(req.body,'i m body')
-    //console.log(req.body.expenseamount)
-    console.log(req.body.description)
+const path=require("path")
+const Attendanceuser = require('../models/attendancemodels')
 
-   
-    Expenseuser.create({
-        expenseamount:req.body.expenseamount,
-        description:req.body.description
-})
-.then(result=>{
-res.json(result)
-})
-.catch(err=>{
-    console.log(err)
-})
-
-}
-exports.delete=(req,res,next)=>{
-    Expenseuser.findByPk(req.params.id)
-    .then(expenseuser=>{
-        return expenseuser.destroy()
+/*exports.delete=(req,res,next)=>{
+    Attendanceuser.findByPk(req.params.id)
+    .then(attendanceuser=>{
+        return attendanceuser.destroy()
     }).then(result=>{
         console.log('Destroyed expense')
         res.json(result)
@@ -33,24 +16,38 @@ exports.edit=(req,res,next)=>{
     const id=req.params.id
     const uexpense=req.params.expense
     const udescription=req.params.description
-    Expenseuser.findByPk(id)
-    .then(expenseuser=>{
-        expenseuser.expense=uexpense,
-        expenseuser.description=udescription
+    Attendanceuser.findByPk(id)
+    .then(attendanceuser=>{
+        attendanceuser.expense=uexpense,
+        attendanceuser.description=udescription
     }).then(result=>{
         console.log('updated expense')
         res.json(result)
     })
     .catch(err=>console.log(err))
-}
+}*/
+exports.summary = (req, res, next) => {
+    console.log("I am getting summary");
+    Attendanceuser.findAll()
+    .then(() => {
+        res.sendFile(path.join(__dirname, '..', 'public', 'attsummary.html'));
+    })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: 'An error occurred while fetching summary for the day' });
+        });
+};
+
+
+
 exports.get = (req, res, next) => {
     console.log("I am getting");
-    Expenseuser.findAll()
-      .then(expenseusers => {
-        res.json(expenseusers);
-      })
-      .catch(err => {
-        console.log(err);
-        res.status(500).json({ error: 'An error occurred while fetching expenses' });
-      });
-  };
+    Attendanceuser.findAll()
+    .then(() => {
+        res.sendFile(path.join(__dirname, '..', 'public', 'register.html'));
+    })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: 'An error occurred while fetching details for the day' });
+        });
+};

@@ -1,11 +1,12 @@
 const express=require('express')
-const attendancecontrollers = require('../controllers/attendancecontrollers')
+const attendancecontrollers = require('../controllers/attendancesummarycontrollers')
 router=express.Router()
 
 
-console.log("hi")
-router.get('/summary',attendancecontrollers.summary)
+console.log("hi routes for student data")
 router.get('/',attendancecontrollers.get)
+router.post('/',attendancecontrollers.add)
+
 
 //router.delete('/:id',attendancecontrollers.delete)
 //router.put('/:id',attendancecontrollers.edit)
