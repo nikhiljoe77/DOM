@@ -1,10 +1,12 @@
 const Sequelize = require('sequelize')
 const sequelize = require('../utils/database')
 const Attendanceuser = sequelize.define('attendanceuser', {
+  
     date: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
+        primaryKey: true,
         allownull: false,
-        primaryKey: true
+        
 
     },
     status1: {
